@@ -179,6 +179,8 @@
                 if ( isItBirthdayDate ) {
                     countdownContainer.style.display = "none";
                     birthdayTime.style.display = "block";
+                    eventDate = new Date( yearOfTheEvent, birth_day_month, birth_day_date );
+                    birtdayDateText.textContent = "Birthday Date: "+eventDate.toDateString();
 
                 } else {
                     daysCountdown.textContent = days;

@@ -149,7 +149,7 @@
             let eventDate = new Date( yearOfTheEvent, birth_day_month, birth_day_date);
             const isItBirthdayDate = currentTime.getMonth() == birth_day_month && currentTime.getDate() == birth_day_date
             
-            birtdayDateText.textContent = "Birthday Date: "+eventDate.toDateString();
+           
 
 
             function countdown() {
@@ -160,6 +160,7 @@
                 } else if ( now.getFullYear() === eventDate.getFullYear() + 1 ) {
                     eventDate = new Date( now.getFullYear(), birth_day_month, birth_day_date );
                 }
+                birtdayDateText.textContent = "Birthday Date: "+eventDate.toDateString();
 
                 const currentTime = now.getTime();
                 const eventTime = eventDate.getTime();

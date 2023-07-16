@@ -130,16 +130,8 @@
             const currentTime = new Date();
             let yearOfTheEvent = currentTime.getFullYear();
             let eventDate = new Date( yearOfTheEvent, birth_day_month, birth_day_date);
-            let isItBirthdayDate = false;
-            if(currentTime.getMonth() == birth_day_month && currentTime.getDate() == birth_day_date){
-                isItBirthdayDate = true;
-            }
+            const isItBirthdayDate = currentTime.getMonth() == birth_day_month && currentTime.getDate() == birth_day_date
 
-            alert(currentTime.getMonth());
-            alert(birth_day_month);
-
-            alert(currentTime.getDate());
-            alert(birth_day_date);
 
             function countdown() {
                 const now = new Date();
@@ -163,7 +155,7 @@
                 hours %= 24;
                 minutes %= 60;
                 seconds %= 60;
-                alert(isItBirthdayDate);
+
                 if ( isItBirthdayDate ) {
                     countdownContainer.style.display = "none";
                     birthdayTime.style.display = "block";

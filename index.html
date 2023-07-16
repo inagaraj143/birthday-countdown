@@ -1,0 +1,181 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Birthday Countdown">
+    <title>Birthday Countdown</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Staatliches');
+        body {
+            background: #f6f6f6;
+            background-color: black;
+            font-family: 'Staatliches', cursive;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        .countdownContainer {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            text-align: center;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            font-size: 70px;
+            background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+            background-size: 1800% 1800%;
+
+            -webkit-animation: rainbow 18s ease infinite;
+            -z-animation: rainbow 18s ease infinite;
+            -o-animation: rainbow 18s ease infinite;
+                animation: rainbow 18s ease infinite;
+        }
+        #birthdayTime {
+            display: none;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            padding: 3rem 0;
+            color: #fff;
+            font-size: 4rem;
+            background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+            background-size: 1800% 1800%;
+            -webkit-animation: rainbow 18s ease infinite;
+            -z-animation: rainbow 18s ease infinite;
+            -o-animation: rainbow 18s ease infinite;
+                animation: rainbow 18s ease infinite;
+        }
+
+        @-webkit-keyframes rainbow {
+            0%{background-position:0% 82%}
+            50%{background-position:100% 19%}
+            100%{background-position:0% 82%}
+        }
+        @-moz-keyframes rainbow {
+            0%{background-position:0% 82%}
+            50%{background-position:100% 19%}
+            100%{background-position:0% 82%}
+        }
+        @-o-keyframes rainbow {
+            0%{background-position:0% 82%}
+            50%{background-position:100% 19%}
+            100%{background-position:0% 82%}
+        }
+        @keyframes rainbow {
+            0%{background-position:0% 82%}
+            50%{background-position:100% 19%}
+            100%{background-position:0% 82%}
+        }
+
+        @media (max-width: 767px) {
+        .countdownContainer {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            font-size: 2rem;
+            padding: 1rem 0;
+        }
+        #birthdayTime {
+            font-size: 2rem;
+        }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .countdownContainer {
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                font-size: 3rem;
+                padding: 2rem 0;
+            }
+            #birthdayTime {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown" class="countdownContainer">
+        <div class="count-down-grid">
+          <div class="days" id="days"></div>
+          <div class="count-down-text">Days</div>
+        </div>
+        <div class="count-down-grid">
+          <div class="days" id="hours"></div>
+          <div class="count-down-text">Hours</div>
+        </div>
+        <div class="count-down-grid">
+          <div class="days" id="minutes"></div>
+          <div class="count-down-text">Minutes</div>
+        </div>
+        <div class="count-down-grid">
+          <div class="days" id="seconds"></div>
+          <div class="count-down-text">Seconds</div>
+        </div>
+    </div>
+     <div id="birthdayTime">
+      Wish you Happy Birthday
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const birthdayTime = document.querySelector('#birthdayTime')
+            const countdownContainer = document.querySelector('#countdown')
+            const daysCountdown = document.querySelector('#days')
+            const hoursCountdown = document.querySelector('#hours')
+            const minutesCountdown = document.querySelector('#minutes')
+            const secondsCountdown = document.querySelector('#seconds')
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const c_month = urlParams.get('m');
+            const d_day = urlParams.get('d');
+            const birth_day_month = c_month ? c_month -1 : "3";
+            const birth_day_date = d_day ? d_day : "13";
+
+            const currentTime = new Date();
+            let yearOfTheEvent = currentTime.getFullYear();
+            let eventDate = new Date( yearOfTheEvent, birth_day_month, birth_day_date);
+            const isItFebruary4th = currentTime.getMonth() == birth_day_month && currentTime.getDate() == birth_day_date
+
+
+            function countdown() {
+                const now = new Date();
+
+                if ( now > eventDate ) {
+                    eventDate = new Date( yearOfTheEvent + 1, birth_day_month, birth_day_date );
+                } else if ( now.getFullYear() === eventDate.getFullYear() + 1 ) {
+                    eventDate = new Date( now.getFullYear(), birth_day_month, birth_day_date );
+                }
+
+                const currentTime = now.getTime();
+                const eventTime = eventDate.getTime();
+                const remainingTime = eventTime - currentTime;
+
+
+                let seconds = Math.floor( remainingTime / 1000 );
+                let minutes = Math.floor( seconds / 60 );
+                let hours =  Math.floor( minutes / 60 );
+                let days = Math.floor( hours / 24 );
+
+                hours %= 24;
+                minutes %= 60;
+                seconds %= 60;
+
+                if ( isItFebruary4th ) {
+                    countdownContainer.style.display = "none";
+                    birthdayTime.style.display = "block";
+
+                } else {
+                    daysCountdown.textContent = days;
+                    hoursCountdown.textContent = hours;
+                    minutesCountdown.textContent = minutes;
+                    secondsCountdown.textContent = seconds;
+
+                    setTimeout(countdown, 1000);
+
+                } 
+
+            } 
+            countdown();
+        }); 
+    </script>
+</body>
+</html>

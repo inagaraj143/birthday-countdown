@@ -149,7 +149,7 @@
             let eventDate = new Date( yearOfTheEvent, birth_day_month, birth_day_date);
             const isItBirthdayDate = currentTime.getMonth() == birth_day_month && currentTime.getDate() == birth_day_date
             
-            birtdayDateText.textContent = "Birthday Date: "+eventDate.toLocaleDateString();
+            birtdayDateText.textContent = "Birthday Date: "+eventDate.toDateString();
 
 
             function countdown() {
